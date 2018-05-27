@@ -1,7 +1,7 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Responsive App</h1>
+    <h1 class="example-app-name">TFE</h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container"
@@ -9,12 +9,16 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
+        <a mat-list-item routerLink="/consensus-builder/datasets">Consensus Builder</a>
+        <ng-container [ngSwitch]="memberService.isLoggedIn()">
+          <a *ngSwitchCase="true" mat-list-item routerLink="/profile">Profile</a>
+          <a *ngSwitchCase="false" mat-list-item routerLink="/login">Login</a>
+        </ng-container>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p *ngFor="let content of fillerContent">{{content}}</p>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

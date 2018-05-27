@@ -41,17 +41,35 @@ import {
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { ROUTES } from './app.routes';
+import {
+  ConsensusBuilderComponent,
+  DatasetSelectorComponent,
+  ParticipantPromptComponent,
+} from './consensus-builder';
+import { LoginComponent } from './login';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConsensusBuilderComponent,
+    DatasetSelectorComponent,
+    ParticipantPromptComponent,
+    LoginComponent,
+    ProfileComponent,
+  ],
+  entryComponents: [
+    ParticipantPromptComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    RouterModule.forRoot(ROUTES),
     HttpClientModule,
     MatNativeDateModule,
     ReactiveFormsModule,

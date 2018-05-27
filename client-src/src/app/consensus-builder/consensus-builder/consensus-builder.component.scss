@@ -1,0 +1,59 @@
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-progress-bar {
+  margin-bottom: 2rem;
+}
+
+.item-card {
+  // width: 400px;
+  p {
+    width: 300px;
+  }
+
+  .content {
+    display: flex;
+    img {
+      margin-right: 1rem;
+    }
+  }
+
+  .matches & {
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+.matches {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.items {
+  position: relative;
+  // width: 100vw;
+
+  .item-card {
+    position: absolute;
+    transition: all linear 300ms;
+    top: 0;
+
+    &.active {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &.previous {
+      left: -110%;
+      transform: translateX(-100%);
+    }
+
+    &.next {
+      left: 110%;
+      transform: translateX(0%);
+    }
+  }
+}

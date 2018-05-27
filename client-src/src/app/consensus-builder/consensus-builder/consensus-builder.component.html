@@ -1,0 +1,61 @@
+<div>
+  <div class="header">
+    <h1>Consensus Builder</h1>
+    <span>
+      <button mat-button color="warn" (click)="reset()">Reset</button>
+    </span>
+  </div>
+  <div *ngIf="!allSelectionsMade">
+    <h2>Make Selections</h2>
+    <h3>Player {{ participantIndex + 1 }}</h3>
+    <p>Item {{ itemIndex + 1 }}/{{ items.length }}</p>
+    <mat-progress-bar
+        color="primary"
+        mode="determinate"
+        [value]="itemIndex / items.length * 100">
+    </mat-progress-bar>
+    <div class="items">
+      <mat-card class="item-card" *ngFor="let item of items; index as i"
+          [class.active]="i == itemIndex"
+          [class.previous]="i < itemIndex"
+          [class.next]="i > itemIndex">
+        <mat-card-header>
+          <mat-card-title>{{ item.data.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="content">
+            <img [src]="item.data.thumbnail">
+            <p>{{ item.data.description }}</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions *ngIf="i == itemIndex">
+          <button mat-button color="primary" (click)="makeSelection(item, true)">
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+          <button mat-button color="warn" (click)="makeSelection(item, false)">
+            <mat-icon>thumb_down</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="allSelectionsMade">
+    <h2>Selection Report</h2>
+    <!-- TODO better to show the percent matched between participants? -->
+    <h3>Selection Rate: {{ matches.length / items.length * 100 }}%</h3>
+    <button mat-button (click)="continue()" [disabled]="!canContinue()">Continue</button>
+    <div class="matches">
+      <mat-card class="item-card" *ngFor="let match of matches">
+        <mat-card-header>
+          <mat-card-title>{{ match.data.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="content">
+            <img [src]="match.data.thumbnail">
+            <p>{{ match.data.description }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
