@@ -9,9 +9,12 @@ mat-progress-bar {
 }
 
 .item-card {
-  // width: 400px;
-  p {
+  .description {
     width: 300px;
+
+    mat-icon {
+      margin-left: 1rem;
+    }
   }
 
   .content {
@@ -55,5 +58,15 @@ mat-progress-bar {
       left: 110%;
       transform: translateX(0%);
     }
+  }
+}
+
+.attribution {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+
+  img {
+    height: 40px;
   }
 }

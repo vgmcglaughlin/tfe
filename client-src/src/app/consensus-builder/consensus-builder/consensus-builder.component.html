@@ -14,8 +14,8 @@
         mode="determinate"
         [value]="itemIndex / items.length * 100">
     </mat-progress-bar>
-    <div class="items">
-      <mat-card class="item-card" *ngFor="let item of items; index as i"
+    <div class="items" [style.height]="maxCardHeight">
+      <mat-card #itemCard class="item-card" *ngFor="let item of items; index as i"
           [class.active]="i == itemIndex"
           [class.previous]="i < itemIndex"
           [class.next]="i > itemIndex">
@@ -25,7 +25,12 @@
         <mat-card-content>
           <div class="content">
             <img [src]="item.data.thumbnail">
-            <p>{{ item.data.description }}</p>
+            <div class="description">
+              <p>{{ item.data.description }}</p>
+              <a mat-button rel="noopener" target="blank" [href]="item.data.externalLink">
+                Link <mat-icon>open_in_new</mat-icon>
+              </a>
+            </div>
           </div>
         </mat-card-content>
         <mat-card-actions *ngIf="i == itemIndex">
@@ -37,6 +42,10 @@
           </button>
         </mat-card-actions>
       </mat-card>
+    </div>
+    <div class="attribution" *ngIf="selectedDataset">
+      <p>{{ selectedDataset.attribution.text }}</p>
+      <img [src]="selectedDataset.attribution.logo">
     </div>
   </div>
   <div *ngIf="allSelectionsMade">

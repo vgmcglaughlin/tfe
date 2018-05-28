@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, ElementRef,  } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCard } from '@angular/material';
 
 import { ParticipantPromptComponent } from '../participant-prompt/participant-prompt.component';
 import { DatasetService, Dataset } from '../../common';
@@ -12,15 +12,17 @@ const NUM_PARTICIPANTS = 2;
   templateUrl: './consensus-builder.component.html',
   styleUrls: ['./consensus-builder.component.scss']
 })
-export class ConsensusBuilderComponent implements OnInit {
+export class ConsensusBuilderComponent implements AfterViewInit, OnInit {
+
+  @ViewChildren(MatCard, { read: ElementRef }) itemCards: QueryList<any>;
 
   selectedDataset: Dataset | null = null;
   participantIndex = 0;
   itemIndex = 0;
   allSelectionsMade = false;
-  // matches = [];
   roundIndex = 0;
   items = [];
+  maxCardHeight = 'auto';
 
   constructor(
     private dialog: MatDialog,
@@ -42,6 +44,22 @@ export class ConsensusBuilderComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit() {
+    this.itemCards.changes.subscribe(queryList => {
+      this.calculateMaxCardHeight();
+    });
+  }
+
+  calculateMaxCardHeight() {
+    setTimeout(() => {
+      this.maxCardHeight = this.itemCards.map(itemCard => {
+        return itemCard.nativeElement.clientHeight;
+      }).reduce((height, prevMaxHeight) => {
+        return Math.max(height, prevMaxHeight);
+      }, 0) + 'px';
+    }, 0);
   }
 
   reset() {
